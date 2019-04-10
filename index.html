@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>fetch-with-abort</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+
+<body>
+  <p>Please open the console.</p>
+  <button class="fetch">Fetch</button>
+  <button class="abort">Abort</button>
+  <script src="./index.js"></script>
+  <script>
+    var result;
+    document.querySelector('.fetch').addEventListener('click', function () {
+      console.log('Now fetching');
+      result = fetchWithAbort("https://httpbin.org/delay/3");
+      result.then(function (response) {
+        console.log(`Fetch complete. (Not aborted)`);
+      }).catch(function (err) {
+        console.error(`Err: ${err}`);
+      });
+    });
+
+    document.querySelector('.abort').addEventListener('click', function () {
+      console.log('Now aborting');
+      result.controller && result.controller.abort();
+    });
+
+  </script>
+</body>
+
+</html>
